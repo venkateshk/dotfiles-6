@@ -1,11 +1,9 @@
 # gitconfig
 [user]
-    name = Nick Nisi
-    email = nick@nisi.org
+    name = Venkatesh Kavuluri
+    email = vkavuluri@paypalcorp.com
 [github]
-    user = nicknisi
-[init]
-    templatedir = ~/.dotfiles/git/templates
+    user = vkavuluri
 [alias]
     # list all aliases
     la = "!git config -l | grep alias | cut -c 7-"

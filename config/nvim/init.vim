@@ -2,7 +2,9 @@
 call plug#begin('~/.config/nvim/plugged')
 
 " colorschemes
-Plug 'chriskempson/base16-vim'
+" Plug 'chriskempson/base16-vim'
+Plug 'morhetz/gruvbox'
+Plug 'shinchu/lightline-gruvbox.vim'
 
 
 " utilities
@@ -18,8 +20,6 @@ Plug 'tpope/vim-surround' " mappings to easily delete, change and add such surro
 Plug 'benmills/vimux' " tmux integration for vim
 Plug 'vim-airline/vim-airline' " fancy statusline
 Plug 'vim-airline/vim-airline-themes' " themes for vim-airline
-" Plug 'scrooloose/syntastic' " syntax checking for vim
-Plug 'benekastah/neomake' " neovim replacement for syntastic using neovim's job control functonality
 Plug 'tpope/vim-fugitive' " amazing git wrapper for vim
 Plug 'tpope/vim-repeat' " enables repeating other supported plugins with the . command
 Plug 'garbas/vim-snipmate' " snippet manager
@@ -29,9 +29,6 @@ Plug 'tomtom/tlib_vim' " utility functions for vim
 Plug 'sotte/presenting.vim', { 'for': 'markdown' } " a simple tool for presenting slides in vim based on text files
 Plug 'ervandew/supertab' " Perform all your vim insert mode completions with Tab
 Plug 'tpope/vim-dispatch' " asynchronous build and test dispatcher
-" Plug 'mtth/scratch.vim'
-" Plug 'tpope/vim-vinegar'
-" Plug 'tpope/vim-abolish'
 Plug 'AndrewRadev/splitjoin.vim' " single/multi line code handler: gS - split one line into multiple, gJ - combine multiple lines into one
 Plug 'vim-scripts/matchit.zip' " extended % matching
 Plug 'tpope/vim-sleuth' " detect indent style (tabs vs. spaces)
@@ -43,20 +40,14 @@ Plug 'junegunn/limelight.vim', { 'on': 'Limelight' } " focus tool. Good for pres
 Plug 'mattn/emmet-vim', { 'for': 'html' } " emmet support for vim - easily create markdup wth CSS-like syntax
 Plug 'gregsexton/MatchTag', { 'for': 'html' } " match tags in html, similar to paren support
 Plug 'othree/html5.vim', { 'for': 'html' } " html5 support
-" Plug 'pangloss/vim-javascript', { 'for': 'javascript' } " JavaScript support
 Plug 'gavocanov/vim-js-indent', { 'for': 'javascript' } " JavaScript indent support
 Plug 'moll/vim-node', { 'for': 'javascript' } " node support
-" Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' } " JavaScript syntax plugin
 Plug 'othree/yajs.vim', { 'for': 'javascript' } " JavaScript syntax plugin
 Plug 'mxw/vim-jsx', { 'for': 'jsx' } " JSX support
 Plug 'elzr/vim-json', { 'for': 'json' } " JSON support
 Plug 'othree/es.next.syntax.vim', { 'for': 'javascript' } " ES6 and beyond syntax
-" Plug 'Quramy/tsuquyomi', { 'for': 'typescript', 'do': 'npm install' } " extended typescript support - works as a client for TSServer
 Plug 'Shougo/vimproc.vim', { 'do': 'make' } " interactive command execution in vim
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' } " typescript support
-" Plug 'clausreinke/typescript-tools.vim', { 'for': 'typescript' } " typescript tools
-" Plug 'juvenn/mustache.vim', { 'for': 'mustache' } " mustache support
-Plug 'mustache/vim-mustache-handlebars' " mustach support
 Plug 'digitaltoad/vim-jade', { 'for': ['jade', 'pug'] } " jade support
 Plug 'cakebaker/scss-syntax.vim', { 'for': 'scss' } " sass scss syntax support
 Plug 'wavded/vim-stylus', { 'for': ['stylus', 'markdown'] } " markdown support
@@ -68,6 +59,8 @@ Plug 'tpope/vim-markdown', { 'for': 'markdown' } " markdown support
 Plug 'fatih/vim-go', { 'for': 'go' } " go support
 Plug 'timcharper/textile.vim', { 'for': 'textile' } " textile support
 Plug 'tclem/vim-arduino' " arduino support - compile wihtout needing to open the arduino IDE
+Plug 'rking/ag.vim' " Lightning fast :Ag searcher
+Plug 'terryma/vim-expand-region' " Press v over and over again to expand selection
 
 call plug#end()
 
@@ -84,7 +77,7 @@ abbr teh the
 abbr tempalte template
 abbr fitler filter
 
-set nocompatible " not compatible with vi
+" set nocompatible " not compatible with vi
 set autoread " detect when a file is changed
 
 " make backspace behave in a sane manner
@@ -108,13 +101,9 @@ set completeopt+=longest
 
 if has('mouse')
     set mouse=a
-    " set ttymouse=xterm2
 endif
 
 set clipboard=unnamed
-
-" faster redrawing
-set ttyfast
 
 set diffopt+=vertical
 
@@ -166,9 +155,9 @@ augroup configgroup
 
     " autocmd! BufEnter * call ApplyLocalSettings(expand('<afile>:p:h'))
 
-    autocmd BufNewFile,BufRead,BufWrite *.md syntax match Comment /\%^---\_.\{-}---$/
+    " autocmd BufNewFile,BufRead,BufWrite *.md syntax match Comment /\%^---\_.\{-}---$/
 
-    autocmd! BufWritePost * Neomake
+    " autocmd! BufWritePost * Neomake
 augroup END
 
 " }}}
@@ -209,7 +198,6 @@ set mat=2 " how many tenths of a second to blink
 " error bells
 set noerrorbells
 set visualbell
-set t_vb=
 set tm=500
 
 " switch syntax highlighting on
@@ -217,9 +205,9 @@ syntax on
 
 set encoding=utf8
 let base16colorspace=256  " Access colors present in 256 colorspace"
-set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
+" set t_Co=256 " Explicitly tell vim that the terminal supports 256 colors"
 execute "set background=".$BACKGROUND
-execute "colorscheme ".$THEME
+" execute "colorscheme ".$THEME
 highlight Comment cterm=italic
 highlight htmlArg cterm=italic
 
@@ -274,10 +262,10 @@ noremap <space> :set hlsearch! hlsearch?<cr>
 nmap ;s :set invspell spelllang=en<cr>
 
 " toggle invisible characters
-set invlist
-set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
+" set invlist
+" set listchars=tab:▸\ ,eol:¬,trail:⋅,extends:❯,precedes:❮
 highlight SpecialKey ctermbg=none " make the highlighting of tabs less annoying
-set showbreak=↪
+" set showbreak=↪
 nmap <leader>l :set list!<cr>
 
 " Textmate style indentation
@@ -518,10 +506,13 @@ let g:ctrlp_working_path_mode = 2
 let g:airline_powerline_fonts=1
 let g:airline_left_sep=''
 let g:airline_right_sep=''
-let g:airline_theme='base16'
+let g:airline_theme='molokai'
 
 " don't hide quotes in json files
 let g:vim_json_syntax_conceal = 0
+
+" see the tab bar all the time
+" set showtabline=2
 
 
 let g:SuperTabCrMapping = 0
@@ -537,6 +528,9 @@ if (has("gui_running"))
 endif
 
 call ApplyLocalSettings(expand('.'))
+
+let g:gruvbox_contrast_dark='hard'
+silent! colorscheme gruvbox
 
 " }}}
 
